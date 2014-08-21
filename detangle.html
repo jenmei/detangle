@@ -3,14 +3,32 @@
 <head>
   <meta name="description" content="[Detangling Git]" />
       <link href="detangle.css" media="screen" rel="stylesheet" type="text/css" />
+      <link href="bower_components/bootstrap/dist/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
 
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <meta charset=utf-8 />
   <title>Detangling Git</title>
   <script src="bower_components/cytoscape/dist/cytoscape.js"></script>
+  <script src="bower_components/lodash/dist/lodash.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
   <script src="detangle.js"></script>
 </head>
 <body>
 <div id="cy"></div>
+<div id="nav" ng-app="detangle">
+  <div ng-controller="detangleCtrl">
+    <label for="start">Starting position:</label>
+    <input id="start" type="text" ng-model="start" size="3" class="ng-valid ng-dirty ng-touched">
+    <input class="btn-primary" ng-click="setStart" type="submit" value="go">
+    <p>Current: {{current}}</p>
+    <p>parents</p>
+    <ul>
+      <li ng-repeat="parent in parents"><a ng-click="selectNode(parent)">{{parent}}</a></li>
+    </ul>
+    <p>previous:
+      <a ng-click="select(previous)">{{previous}}</a>
+    </p>
+  </div>
+</div>
 </body>
 </html>
