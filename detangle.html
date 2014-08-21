@@ -19,14 +19,14 @@
   <div ng-controller="detangleCtrl">
     <label for="start">Starting position:</label>
     <input id="start" type="text" ng-model="start" size="3" class="ng-valid ng-dirty ng-touched">
-    <input class="btn-primary" ng-click="setStart" type="submit" value="go">
+    <input class="btn-primary" ng-click="setStart(start)" type="submit" value="go">
     <p>Current: {{current}}</p>
     <p>parents</p>
     <ul>
-      <li ng-repeat="parent in parents"><a ng-click="selectNode(parent)">{{parent}}</a></li>
+      <li ng-repeat="parent in parents"><a ng-click="moveTo(parent)">{{parent}}</a></li>
     </ul>
-    <p>previous:
-      <a ng-click="select(previous)">{{previous}}</a>
+    <p>
+      <a ng-click="goBack()">go back to {{previous}}</a>
     </p>
   </div>
 </div>

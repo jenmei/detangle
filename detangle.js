@@ -141,20 +141,49 @@ angular.module('detangle', [])
   .controller('detangleCtrl', function ($scope) {
 
     function parentsFor(node) {
+      var parents = [];
+      var selector = "edge[target='" + node + "']";
+      console.log('selector:', selector);
+      if (cy.elements) {
+        cy.elements(selector).sources()
+          .each(function (i, ele) {
+            parents.push(ele.id());
+          });
+      }
 
+      return parents;
     }
 
     function setStart(start) {
+      console.log("setStart");
       $scope.start = start;
       $scope.current = start;
       $scope.parents = parentsFor(start);
       $scope.previous = null;
+      $scope.stack = [];
+    }
+    $scope.setStart = setStart;
+
+    setStart('u');
+
+    function goBack() {
+      debugger;
+      $scope.current = $scope.stack.pop();
+      if ($scope.stack.length > 0) {
+        $scope.previous = $scope.stack[$scope.stack.length - 1];
+      } else {
+        $scope.previous = null;
+      }
+      $scope.parents = parentsFor($scope.current);
     }
 
-    setStart('a');
+    $scope.goBack = goBack;
 
-    $scope.selectNode = function (node) {
-      console.log('clicked:', node)
+    $scope.moveTo = function (node) {
+      console.log('clicked:', node);
+      $scope.stack.push($scope.current);
+      $scope.previous = $scope.current;
+      $scope.current = node;
+      $scope.parents = parentsFor(node);
     };
-    $scope.setStart = setStart;
 });
